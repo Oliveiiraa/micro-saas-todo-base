@@ -31,7 +31,10 @@ export function MainSidebar({ user }: MainSidebarProps) {
   return (
     <DashboardSidebar>
       <DashboardSidebarHeader>
-        <Logo />
+        <div className="flex items-center gap-4">
+          <Logo />
+          TodoList
+        </div>
       </DashboardSidebarHeader>
       <DashboardSidebarMain className="flex flex-col flex-grow">
         <DashboardSidebarNav>
