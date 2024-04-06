@@ -42,7 +42,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
             </DashboardSidebarNavLink>
             <DashboardSidebarNavLink
               href="/app/settings"
-              active={isActive('/settings')}
+              active={isActive('/app/settings')}
             >
               <MixerVerticalIcon className="w-4 h-4 mr-3" />
               Configurações
