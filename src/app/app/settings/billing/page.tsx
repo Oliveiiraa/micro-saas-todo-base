@@ -9,23 +9,35 @@ import {
 } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { createCheckoutSessionAction } from './actions'
+import { auth } from '@/services/auth'
+import { getUserQuota } from '@/services/stripe'
 
 export default async function Page() {
+  const session = await auth()
+  const plan = await getUserQuota(session?.user.id as string)
+
   return (
     <form action={createCheckoutSessionAction}>
       <Card>
         <CardHeader className="border-b border-border">
           <CardTitle>Uso do Plano</CardTitle>
-          <CardDescription>Exibir o uso do plano</CardDescription>
+          <CardDescription>
+            Você está atualmente no plano{' '}
+            <span className="font-bold uppercase">{plan.name}</span>.
+          </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="space-y-4">
             <header className="flex items-center justify-between">
-              <span className="text-muted-foreground text-sm">1/5</span>
-              <span className="text-muted-foreground text-sm">20%</span>
+              <span className="text-muted-foreground text-sm">
+                {plan.quota.TASKS.current}/{plan.quota.TASKS.available}
+              </span>
+              <span className="text-muted-foreground text-sm">
+                {plan.quota.TASKS.usage}%
+              </span>
             </header>
             <main>
-              <Progress value={20} />
+              <Progress value={plan.quota.TASKS.usage} />
             </main>
           </div>
         </CardContent>
